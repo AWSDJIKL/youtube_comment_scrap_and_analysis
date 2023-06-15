@@ -8,13 +8,13 @@ Created on Tue Mar 29 13:20:00 2022
 from selenium import webdriver
 
 import time
-
+import csv
 # 需要爬的youtube影片id
 # youtubeid_list = ["0GZSfBuhf6Y", "Gaf_jCnA6mc"]
 with open("youtube_video_ids.txt", "r") as f:
     youtubeid_list = f.readlines()
 driver = webdriver.Chrome()
-i = 1
+video_index = 1
 for youtubeid in youtubeid_list:
     driver.get('https://www.youtube.com/watch?v=' + youtubeid)
 
@@ -44,12 +44,12 @@ for youtubeid in youtubeid_list:
             # print (modified)
 
     # write to a csv file:
-    import csv
 
-    with open('workshop_comment{}.csv'.format(i), 'w', encoding='utf-8', newline='') as csvfile:
+
+    with open('workshop_comment{}.csv'.format(video_index), 'w', encoding='utf-8', newline='') as csvfile:
         writer = csv.writer(csvfile)
         for commentrow in comment_list:
             newline = []
             newline.append(commentrow)
             writer.writerow(newline)
-    i += 1
+    video_index += 1
