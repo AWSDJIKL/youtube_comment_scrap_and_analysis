@@ -12,14 +12,18 @@ from gensim import matutils, models
 import scipy.sparse
 from collections import Counter
 import argparse
-
+import os
 parser = argparse.ArgumentParser(description='youtube comment scrap and analysis')
 parser.add_argument("--topic_num", type=int, default=2, help="LDA topic number")
 args = parser.parse_args()
 # how many files you have?
 # nfile = 1
-with open("youtube_video_ids.txt", "r") as file:
-    nfile = len(file.readlines())
+# 获取当前工作目录
+current_directory = os.getcwd()
+
+# 获取当前目录下以"workshop_comment"为前缀的csv文件列表
+nfile = len([file for file in os.listdir(current_directory) if file.startswith("workshop_comment") and file.endswith(".csv")])
+
 add_stop_words = ["really", "ve"]
 
 stop_words = text.ENGLISH_STOP_WORDS.union(add_stop_words)
